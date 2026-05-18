@@ -5,6 +5,12 @@
 #include <iostream>
 
 namespace alekseev {
+  struct expected {
+    char c;
+  };
+
+  std::istream & operator>>(std::istream & is, expected & e);
+
   struct chr_lit {
     char data;
   };

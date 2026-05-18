@@ -16,18 +16,21 @@ namespace alekseev {
   };
 
   std::istream & operator>>(std::istream & is, chr_lit & chr);
+  std::ostream & operator<<(std::ostream & os, const chr_lit & chr);
 
   struct cmp_lsp {
     std::complex< double > data;
   };
 
   std::istream & operator>>(std::istream & is, cmp_lsp & cmp);
+  std::ostream & operator<<(std::ostream & os, const cmp_lsp & cmp);
 
   struct str_lit {
     std::string data;
   };
 
   std::istream & operator>>(std::istream & is, str_lit & str);
+  std::ostream & operator<<(std::ostream & os, const str_lit & str);
 
   struct DataStruct {
     chr_lit key1;

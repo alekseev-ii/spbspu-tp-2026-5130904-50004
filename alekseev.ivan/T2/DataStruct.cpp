@@ -26,6 +26,12 @@ std::istream & alekseev::operator>>(std::istream & is, chr_lit & chr)
   return is;
 }
 
+std::ostream & alekseev::operator<<(std::ostream & os, const chr_lit & chr)
+{
+  os << "\'" << chr.data << "\'";
+  return os;
+}
+
 std::istream & alekseev::operator>>(std::istream & is, cmp_lsp & cmp)
 {
   if (!is) {
@@ -35,6 +41,11 @@ std::istream & alekseev::operator>>(std::istream & is, cmp_lsp & cmp)
   is >> expected{"#c("} >> r >> expected{" "} >> i >> expected{")"};
   cmp = {std::complex< double >(r, i)};
   return is;
+}
+
+std::ostream & alekseev::operator<<(std::ostream & os, const cmp_lsp & cmp)
+{
+  os << "#c(" << cmp.data.real() << " " << cmp.data.imag() << ")";
 }
 
 std::istream & alekseev::operator>>(std::istream & is, str_lit & str)
@@ -48,4 +59,9 @@ std::istream & alekseev::operator>>(std::istream & is, str_lit & str)
   is >> expected{"\""};
   str = {res};
   return is;
+}
+
+std::ostream & alekseev::operator<<(std::ostream & os, const str_lit & str)
+{
+  os << "\"" << str.data << "\"";
 }

@@ -36,3 +36,16 @@ std::istream & alekseev::operator>>(std::istream & is, cmp_lsp & cmp)
   cmp = {std::complex< double >(r, i)};
   return is;
 }
+
+std::istream & alekseev::operator>>(std::istream & is, str_lit & str)
+{
+  if (!is) {
+    return is;
+  }
+  std::string res;
+  is >> expected{"\""};
+  std::getline(is, res, '\"');
+  is >> expected{"\""};
+  str = {res};
+  return is;
+}

@@ -1,0 +1,35 @@
+#ifndef DATASTRUCT_H
+#define DATASTRUCT_H
+#include <complex>
+#include <string>
+#include <iostream>
+
+namespace alekseev {
+  struct chr_lit {
+    char data;
+  };
+
+  std::istream & operator>>(std::istream & is, chr_lit & chr);
+
+  struct cmp_lsp {
+    std::complex< double > data;
+  };
+
+  std::istream & operator>>(std::istream & is, cmp_lsp & cmp);
+
+  struct str_lit {
+    std::string data;
+  };
+
+  std::istream & operator>>(std::istream & is, str_lit & str);
+
+  struct DataStruct {
+    chr_lit key1;
+    cmp_lsp key2;
+    str_lit key3;
+  };
+
+  std::istream & operator>>(std::istream & is, DataStruct & data);
+}
+
+#endif

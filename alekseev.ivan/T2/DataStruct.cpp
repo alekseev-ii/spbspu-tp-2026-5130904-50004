@@ -25,3 +25,14 @@ std::istream & alekseev::operator>>(std::istream & is, chr_lit & chr)
   is >> expected{"\'"} >> chr.data >> expected{"\'"};
   return is;
 }
+
+std::istream & alekseev::operator>>(std::istream & is, cmp_lsp & cmp)
+{
+  if (!is) {
+    return is;
+  }
+  double r = 0, i = 0;
+  is >> expected{"#c("} >> r >> expected{" "} >> i >> expected{")"};
+  cmp = {std::complex< double >(r, i)};
+  return is;
+}

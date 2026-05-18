@@ -56,6 +56,7 @@ std::istream & alekseev::operator>>(std::istream & is, cmp_lsp & cmp)
 std::ostream & alekseev::operator<<(std::ostream & os, const cmp_lsp & cmp)
 {
   os << "#c(" << cmp.data.real() << " " << cmp.data.imag() << ")";
+  return os;
 }
 
 bool alekseev::str_lit::operator<(const str_lit & rhs) const
@@ -79,4 +80,28 @@ std::istream & alekseev::operator>>(std::istream & is, str_lit & str)
 std::ostream & alekseev::operator<<(std::ostream & os, const str_lit & str)
 {
   os << "\"" << str.data << "\"";
+  return os;
+}
+
+std::istream & alekseev::operator>>(std::istream & is, DataStruct & data)
+{
+  if (!is) {
+    return is;
+  }
+  char n = 0;
+  is >> expected{"("};
+  for (size_t i = 0; i < 3; ++i) {
+    is >> expected{":key"} >> n >> expected{" "};
+    switch (n) {
+      case '1': is >> data.key1;
+        break;
+      case '2': is >> data.key2;
+        break;
+      case '3': is >> data.key3;
+        break;
+      default: is.setstate(std::ios_base::failbit);
+        return is;
+    }
+  }
+  return is;
 }

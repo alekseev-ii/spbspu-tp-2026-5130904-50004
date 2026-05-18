@@ -1,12 +1,12 @@
 #include "Shape.h"
 
-std::ostream& alekseev::operator<<(std::ostream& out, const alekseev::point_t& p)
+std::ostream & alekseev::operator<<(std::ostream & out, const point_t & p)
 {
   out << "(" << p.x_ << ", " << p.y_ << ")";
   return out;
 }
 
-std::ostream& alekseev::operator<<(std::ostream& out, const alekseev::rectangle_t& r)
+std::ostream & alekseev::operator<<(std::ostream & out, const rectangle_t & r)
 {
   out << r.width_ << " " << r.height_ << " " << r.pos_;
   return out;

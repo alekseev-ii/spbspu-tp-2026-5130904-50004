@@ -15,14 +15,16 @@ namespace alekseev {
 
   struct point_t {
     double x_, y_;
-    friend std::ostream& operator<<(std::ostream& out, const point_t& p);
   };
+
+  std::ostream & operator<<(std::ostream & out, const point_t & p);
 
   struct rectangle_t {
     double width_, height_;
     point_t pos_;
-    friend std::ostream& operator<<(std::ostream& out, const rectangle_t& r);
   };
+
+  std::ostream & operator<<(std::ostream & out, const rectangle_t & r);
 
   struct iShape {
     virtual ~iShape() = default;

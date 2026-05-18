@@ -6,7 +6,7 @@
 
 namespace alekseev {
   struct expected {
-    char c;
+    std::string source;
   };
 
   std::istream & operator>>(std::istream & is, expected e);

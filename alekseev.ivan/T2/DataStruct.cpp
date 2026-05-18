@@ -105,3 +105,9 @@ std::istream & alekseev::operator>>(std::istream & is, DataStruct & data)
   }
   return is;
 }
+
+std::ostream & alekseev::operator<<(std::ostream & os, const DataStruct & data)
+{
+  os << "(:key1 " << data.key1 << ":key2 " << data.key2 << ":key3)";
+  return os;
+}

@@ -17,6 +17,11 @@ std::istream & alekseev::operator>>(std::istream & is, expected e)
   return is;
 }
 
+bool alekseev::chr_lit::operator<(const chr_lit & rhs) const
+{
+  return data < rhs.data;
+}
+
 std::istream & alekseev::operator>>(std::istream & is, chr_lit & chr)
 {
   if (!is) {
@@ -30,6 +35,11 @@ std::ostream & alekseev::operator<<(std::ostream & os, const chr_lit & chr)
 {
   os << "\'" << chr.data << "\'";
   return os;
+}
+
+bool alekseev::cmp_lsp::operator<(const cmp_lsp & rhs) const
+{
+  return std::abs(data) < std::abs(rhs.data);
 }
 
 std::istream & alekseev::operator>>(std::istream & is, cmp_lsp & cmp)
@@ -46,6 +56,11 @@ std::istream & alekseev::operator>>(std::istream & is, cmp_lsp & cmp)
 std::ostream & alekseev::operator<<(std::ostream & os, const cmp_lsp & cmp)
 {
   os << "#c(" << cmp.data.real() << " " << cmp.data.imag() << ")";
+}
+
+bool alekseev::str_lit::operator<(const str_lit & rhs) const
+{
+  return data.size() < rhs.data.size();
 }
 
 std::istream & alekseev::operator>>(std::istream & is, str_lit & str)

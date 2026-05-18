@@ -13,6 +13,8 @@ namespace alekseev {
 
   struct chr_lit {
     char data;
+
+    bool operator<(const chr_lit & rhs) const;
   };
 
   std::istream & operator>>(std::istream & is, chr_lit & chr);
@@ -20,6 +22,8 @@ namespace alekseev {
 
   struct cmp_lsp {
     std::complex< double > data;
+
+    bool operator<(const cmp_lsp & rhs) const;
   };
 
   std::istream & operator>>(std::istream & is, cmp_lsp & cmp);
@@ -27,6 +31,8 @@ namespace alekseev {
 
   struct str_lit {
     std::string data;
+
+    bool operator<(const str_lit & rhs) const;
   };
 
   std::istream & operator>>(std::istream & is, str_lit & str);

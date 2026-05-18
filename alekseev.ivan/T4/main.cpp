@@ -18,8 +18,8 @@ int main()
     alekseev::make_shape(alekseev::CIRCLE),
     alekseev::make_shape(alekseev::POLYGON)
   };
-  double x = 0, y = 0, k = 0;
-  std::cin >> x >> y >> k;
+  double x = 0, y = 0, k = 2;
+  // std::cin >> x >> y >> k;
   if (std::cin.fail() || k < 0) {
     std::cerr << "bad input\n";
     return 1;

@@ -9,7 +9,7 @@ namespace alekseev {
     char c;
   };
 
-  std::istream & operator>>(std::istream & is, expected & e);
+  std::istream & operator>>(std::istream & is, expected e);
 
   struct chr_lit {
     char data;

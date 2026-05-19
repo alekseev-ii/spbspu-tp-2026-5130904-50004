@@ -42,6 +42,8 @@ namespace alekseev {
     chr_lit key1;
     cmp_lsp key2;
     str_lit key3;
+
+    bool operator<(const DataStruct & rhs) const;
   };
 
   std::istream & operator>>(std::istream & is, DataStruct & data);

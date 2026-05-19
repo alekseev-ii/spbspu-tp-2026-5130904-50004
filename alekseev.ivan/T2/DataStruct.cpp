@@ -83,6 +83,20 @@ std::ostream & alekseev::operator<<(std::ostream & os, const str_lit & str)
   return os;
 }
 
+bool alekseev::DataStruct::operator<(const DataStruct & rhs) const
+{
+  if (key1 < rhs.key1) {
+    return true;
+  }
+  if (key2 < rhs.key2) {
+    return true;
+  }
+  if (key3 < rhs.key3) {
+    return true;
+  }
+  return false;
+}
+
 std::istream & alekseev::operator>>(std::istream & is, DataStruct & data)
 {
   if (!is) {
@@ -108,6 +122,6 @@ std::istream & alekseev::operator>>(std::istream & is, DataStruct & data)
 
 std::ostream & alekseev::operator<<(std::ostream & os, const DataStruct & data)
 {
-  os << "(:key1 " << data.key1 << ":key2 " << data.key2 << ":key3)";
+  os << "(:key1 " << data.key1 << ":key2 " << data.key2 << ":key3" << data.key3 << ")";
   return os;
 }

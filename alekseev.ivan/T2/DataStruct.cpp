@@ -6,13 +6,12 @@ std::istream & alekseev::operator>>(std::istream & is, expected e)
     return is;
   }
   char c = 0;
-  is >> c;
   for (size_t i = 0; i < e.source.length(); ++i) {
+    is >> c;
     if (c != e.source[i]) {
       is.setstate(std::ios_base::failbit);
       return is;
     }
-    is >> c;
   }
   return is;
 }
@@ -48,7 +47,7 @@ std::istream & alekseev::operator>>(std::istream & is, cmp_lsp & cmp)
     return is;
   }
   double r = 0, i = 0;
-  is >> expected{"#c("} >> r >> expected{" "} >> i >> expected{")"};
+  is >> expected{"#c("} >> r >> i >> expected{")"};
   cmp = {std::complex< double >(r, i)};
   return is;
 }
@@ -72,7 +71,6 @@ std::istream & alekseev::operator>>(std::istream & is, str_lit & str)
   std::string res;
   is >> expected{"\""};
   std::getline(is, res, '\"');
-  is >> expected{"\""};
   str = {res};
   return is;
 }
@@ -88,10 +86,10 @@ bool alekseev::DataStruct::operator<(const DataStruct & rhs) const
   if (key1 < rhs.key1) {
     return true;
   }
-  if (key2 < rhs.key2) {
+  if (key2 < rhs.key2 && !(rhs.key1 < key1)) {
     return true;
   }
-  if (key3 < rhs.key3) {
+  if (key3 < rhs.key3 && !(rhs.key2 < key2) && !(rhs.key1 < key1)) {
     return true;
   }
   return false;
@@ -102,26 +100,49 @@ std::istream & alekseev::operator>>(std::istream & is, DataStruct & data)
   if (!is) {
     return is;
   }
+  std::string line;
+  std::getline(is, line);
+  std::istringstream iss(line);
+  bool was[3]{false};
   char n = 0;
-  is >> expected{"("};
+  iss >> expected{"("};
   for (size_t i = 0; i < 3; ++i) {
-    is >> expected{":key"} >> n >> expected{" "};
-    switch (n) {
-      case '1': is >> data.key1;
-        break;
-      case '2': is >> data.key2;
-        break;
-      case '3': is >> data.key3;
-        break;
-      default: is.setstate(std::ios_base::failbit);
+    iss >> expected{":key"} >> n;
+    if (n == '1') {
+      if (was[0]) {
+        is.setstate(std::ios_base::failbit);
         return is;
+      }
+      was[0] = true;
+      iss >> data.key1;
+    } else if (n == '2') {
+      if (was[1]) {
+        is.setstate(std::ios_base::failbit);
+        return is;
+      }
+      was[1] = true;
+      iss >> data.key2;
+    } else if (n == '3') {
+      if (was[2]) {
+        is.setstate(std::ios_base::failbit);
+        return is;
+      }
+      was[2] = true;
+      iss >> data.key3;
+    } else {
+      is.setstate(std::ios_base::failbit);
+      return is;
     }
+  }
+  iss >> expected{":)"};
+  if (iss.fail()) {
+    is.setstate(std::ios_base::failbit);
   }
   return is;
 }
 
 std::ostream & alekseev::operator<<(std::ostream & os, const DataStruct & data)
 {
-  os << "(:key1 " << data.key1 << ":key2 " << data.key2 << ":key3" << data.key3 << ")";
+  os << "(:key1 " << data.key1 << ":key2 " << data.key2 << ":key3 " << data.key3 << ":)";
   return os;
 }

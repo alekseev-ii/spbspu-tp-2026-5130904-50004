@@ -100,43 +100,42 @@ std::istream & alekseev::operator>>(std::istream & is, DataStruct & data)
   if (!is) {
     return is;
   }
-  std::string line;
-  std::getline(is, line);
-  std::istringstream iss(line);
-  bool was[3]{false};
-  char n = 0;
-  iss >> expected{"("};
-  for (size_t i = 0; i < 3; ++i) {
-    iss >> expected{":key"} >> n;
-    if (n == '1') {
-      if (was[0]) {
-        is.setstate(std::ios_base::failbit);
-        return is;
+  while (!is.eof()) {
+    std::string line;
+    std::getline(is, line);
+    std::istringstream iss(line);
+    bool was[3]{false};
+    char n = 0;
+    iss >> expected{"("};
+    for (size_t i = 0; i < 3; ++i) {
+      iss >> expected{":key"} >> n;
+      if (n == '1') {
+        if (was[0]) {
+          continue;
+        }
+        was[0] = true;
+        iss >> data.key1;
+      } else if (n == '2') {
+        if (was[1]) {
+          continue;
+        }
+        was[1] = true;
+        iss >> data.key2;
+      } else if (n == '3') {
+        if (was[2]) {
+          continue;
+        }
+        was[2] = true;
+        iss >> data.key3;
+      } else {
+        continue;
       }
-      was[0] = true;
-      iss >> data.key1;
-    } else if (n == '2') {
-      if (was[1]) {
-        is.setstate(std::ios_base::failbit);
-        return is;
-      }
-      was[1] = true;
-      iss >> data.key2;
-    } else if (n == '3') {
-      if (was[2]) {
-        is.setstate(std::ios_base::failbit);
-        return is;
-      }
-      was[2] = true;
-      iss >> data.key3;
-    } else {
-      is.setstate(std::ios_base::failbit);
-      return is;
     }
-  }
-  iss >> expected{":)"};
-  if (iss.fail()) {
-    is.setstate(std::ios_base::failbit);
+    iss >> expected{":)"};
+    if (iss.fail()) {
+      continue;
+    }
+    break;
   }
   return is;
 }

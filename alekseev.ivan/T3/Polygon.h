@@ -5,6 +5,12 @@
 #include <iostream>
 
 namespace alekseev {
+  struct expected {
+    std::string source;
+  };
+
+  std::istream & operator>>(std::istream & is, expected e);
+
   struct Point {
     int x, y;
   };

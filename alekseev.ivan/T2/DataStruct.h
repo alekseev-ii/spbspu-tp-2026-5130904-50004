@@ -48,6 +48,32 @@ namespace alekseev {
 
   std::istream & operator>>(std::istream & is, DataStruct & data);
   std::ostream & operator<<(std::ostream & os, const DataStruct & data);
+
+  struct IOGuard {
+    explicit IOGuard(std::basic_ios< char > & stream):
+      stream_(stream),
+      precision_(stream.precision()),
+      width_(stream.width()),
+      flags_(stream.flags()),
+      fill_(stream.fill())
+    {
+    }
+
+    ~IOGuard()
+    {
+      stream_.precision(precision_);
+      stream_.width(width_);
+      stream_.flags(flags_);
+      stream_.fill(fill_);
+    }
+
+    private:
+      std::basic_ios< char > & stream_;
+      std::streamsize precision_;
+      std::streamsize width_;
+      std::basic_ios< char >::fmtflags flags_;
+      char fill_;
+  };
 }
 
 #endif

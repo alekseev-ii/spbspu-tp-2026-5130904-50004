@@ -1,4 +1,5 @@
 #include "DataStruct.h"
+#include <iomanip>
 
 std::istream & alekseev::operator>>(std::istream & is, expected e)
 {
@@ -142,6 +143,8 @@ std::istream & alekseev::operator>>(std::istream & is, DataStruct & data)
 
 std::ostream & alekseev::operator<<(std::ostream & os, const DataStruct & data)
 {
+  IOGuard guard(os);
+  os << std::fixed << std::setprecision(1);
   os << "(:key1 " << data.key1 << ":key2 " << data.key2 << ":key3 " << data.key3 << ":)";
   return os;
 }

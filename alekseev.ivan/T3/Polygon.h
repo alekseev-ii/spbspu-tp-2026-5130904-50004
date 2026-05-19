@@ -1,6 +1,6 @@
 #ifndef POLYGON_H
 #define POLYGON_H
-#include <string>
+
 #include <vector>
 #include <iostream>
 
